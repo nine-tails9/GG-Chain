@@ -65,15 +65,16 @@
 
             <div class="form-group">
                 <label for="model">Upload Model</label>
-                <input type="file" enctype="multipart/form-data" class="form-control" name="model" ref="model"
+                <input type="file" enctype="multipart/form-data" class="form-control" ref="model"
                        @change="handleModel">
 
             </div>
             <div class="form-group">
-                <label for="shard">Upload Shard</label>
-                <input type="file" class="form-control" multiple name="shards[]">
+                <label for="shard">Upload Shards</label>
+                <input type="file" class="form-control" enctype="multipart/form-data" multiple
+                       ref="shard" @change="handleShards">
             </div>
-
+            <div class="alert alert-danger" v-if="err">Files Errors</div>
             <input type="submit" class="btn btn-primary" @click="uploadModel" v-if="!loading.model" value="Upload">
             <button class="btn btn-dark" @click="uploadModel" v-if="loading.model">Uploading...</button>
         </form>

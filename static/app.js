@@ -4,7 +4,8 @@ new Vue({
     data: {
         name: "SS",
         model : '',
-        file: '',
+        shards: [],
+        err: false,
         loading: {
             model: false,
             shard: false
@@ -25,12 +26,26 @@ new Vue({
             await model.save('indexeddb://my-model');
         },
         handleModel(){
-            this.file = this.$refs.model.files[0];
+            this.model = this.$refs.model.files[0];
+        },
+        handleShards(){
+            this.shards = this.$refs.shard.files;
+            console.log(this.shards);
         },
         uploadModel(){
+
+            if(!this.model || this.shards.length === 0){
+                this.err = true;
+                return;
+            }
             this.loading.model = true;
+
+            this.err =  false;
             let formData = new FormData();
-            formData.append('file', this.file);
+            formData.append('model', this.model);
+
+            for(let i = 0; i < this.shards.length; i++)
+                formData.append('shards' + i, this.shards[i]);
 
             fetch('/new_model', {
                 method: 'POST',
