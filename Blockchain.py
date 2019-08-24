@@ -17,19 +17,21 @@ class Block:
 
 	def getAccuracy(self):
 		# TO-DO: create a accuracy solving function from test data
-		return 0
+		return 0.001
 
 
 class Blockchain:
 	threshold = 0.1
 
 	def __init__(self, parameters):
+		self.chainLength = 0
 		self.chain = []
 		self.createGenesisBlock(parameters)
 		self.currentAccuracy = self.lastBlock.getAccuracy()
 
 	def createGenesisBlock(self, parameters):
 		genesisBlock = Block(0, parameters, time.time(),"0")
+		self.chainLength = self.chainLength + 1
 		self.chain.append(genesisBlock)
 
 	@property
@@ -44,7 +46,8 @@ class Blockchain:
 
 		if not self.isValidProof(block):
 			return False
-
+			
+		self.chainLength = self.chainLength + 1
 		self.chain.append(block)
 		self.currentAccuracy = block.getAccuracy()
 		return True

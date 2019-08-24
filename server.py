@@ -10,7 +10,7 @@ peers = []
 
 
 #Initalize Node Copy Of BlockChain
-blockchain = False
+blockchain = Blockchain.Blockchain([])
 #.............
 
 @app.route('/new_model', methods=['POST'])
@@ -93,7 +93,7 @@ def announce_new_block(block):
         requests.post(url, data=json.dumps(block.__dict__, sort_keys=True))
 @app.route('/home')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', accuracy=blockchain.currentAccuracy, chainLength=blockchain.chainLength)
 
 @app.route('/download_dataset', methods=['GET'])
 def download():
