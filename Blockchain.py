@@ -25,7 +25,7 @@ class Blockchain:
 	def __init__(self):
 		self.chain = []
 		self.createGenesisBlock()
-		self.currentAccuracy = self.getLastBlock().getAccuracy()
+		self.currentAccuracy = self.lastBlock.getAccuracy()
 
 	def createGenesisBlock(self):
 		genesisBlock = Block(0, [], time.time(),"0")
