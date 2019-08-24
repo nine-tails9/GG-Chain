@@ -8,7 +8,7 @@ class Block:
 		self.parameters = parameters
 		self.timestamp = timestamp
 		self.previousHash = previousHash
-		# self.hash
+		self.hash = self.computeHash()
 
 	def computeHash(self):
 		blockString = json.dumps(self.__dict__, sort_keys=True)
@@ -29,7 +29,6 @@ class Blockchain:
 
 	def createGenesisBlock(self):
 		genesisBlock = Block(0, [], time.time(),"0")
-		genesisBlock.hash = genesisBlock.computeHash()
 		self.chain.append(genesisBlock)
 
 	@property
@@ -53,3 +52,4 @@ class Blockchain:
 		if block.getAccuracy() - self.currentAccuracy > threshold:
 			return True
 		return False
+

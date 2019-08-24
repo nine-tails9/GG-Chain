@@ -1,14 +1,16 @@
 from flask import Flask, escape, request, render_template
 import requests, time, json
+import Blockchain
 
 app = Flask(__name__)
 
 peers = []
 #Initalize Node Copy Of BlockChain
+blockchain = Blockchain.Blockchain()
 #.............
 
 @app.route('/submit_params', methods=['POST'])
-def new_transaction():
+def new_block():
     tx_data = request.get_json()
     required_fields = ["author", "parameters"]
  
