@@ -14,8 +14,10 @@ new Vue({
                     // console.log(JSON.stringify(myJson));
                     return myJson;
                 });
-            console.log(modelLoad)
-            // const model = await tf.loadLayersModel(modelLoad);
+            console.log(modelLoad);
+            const model = await tf.loadLayersModel("http://127.0.0.1:5000/static/model/model.json");
+            // console.log(model);
+            await model.save('indexeddb://my-model');
         }
     }
 });
