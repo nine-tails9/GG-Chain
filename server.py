@@ -1,9 +1,9 @@
-from flask import Flask, escape, request, render_template
+from flask import Flask, escape, request, render_template, jsonify
 import requests, time, json
 import Blockchain
-
+from flask_cors import CORS
 app = Flask(__name__)
-
+CORS(app)
 peers = []
 #Initalize Node Copy Of BlockChain
 blockchain = Blockchain.Blockchain()
@@ -13,7 +13,7 @@ blockchain = Blockchain.Blockchain()
 def new_block():
     tx_data = request.get_json()
     required_fields = ["author", "parameters"]
- 
+
     for field in required_fields:
         if not tx_data.get(field):
             return "Invlaid Parameters data", 404
@@ -21,7 +21,7 @@ def new_block():
 
 
     blockchain.add_new_transaction(tx_data)
- 
+
     return "Success", 201
 
 @app.route('/get_chain', methods=['GET'])
@@ -43,10 +43,10 @@ def register_new_peers():
 
 # def consensus():
 #     global blockchain
- 
+
 #     longest_chain = None
 #     current_len = len(blockchain)
- 
+
 #     for node in peers:
 #         response = requests.get('http://{}/chain'.format(node))
 #         length = response.json()['length']
@@ -54,16 +54,14 @@ def register_new_peers():
 #         if length > current_len and blockchain.check_chain_validity(chain):
 #             current_len = length
 #             longest_chain = chain
- 
+
 #     if longest_chain:
 #         blockchain = longest_chain
 #         return True
- 
+
 #     return False
 def validate_and_add_block(block_data):
 
-    #find Accuracy
-    #acc = 
     prev_block = getPrevBlock()
     if acc > prev_block['accuray']:
         proof = block_data['hash']
@@ -72,18 +70,16 @@ def validate_and_add_block(block_data):
         return "The block was discarded by the node", 400
     announce_new_block(added)
     return "Block added to the chain", 201
-     
+
 def announce_new_block(block):
     for peer in peers:
         url = "http://{}/add_block".format(peer)
         requests.post(url, data=json.dumps(block.__dict__, sort_keys=True))
-
 @app.route('/home')
 def index():
-    return render_template('index.html') 
+    return render_template('index.html')
 
-# @app.route('download_dataset')
-# def download():
-#     data = []
-#     return data.json()
-    
+@app.route('/download_dataset', methods=['GET'])
+def download():
+    data = {'author': "Deepanshu", "Year": "3rd"}
+    return jsonify(data)
