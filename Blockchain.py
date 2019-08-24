@@ -1,6 +1,7 @@
 from hashlib import sha256
 import time
 import json
+from flask import Flask, request
 
 class Block:
 	def __init__(self, index, parameters, timestamp, previousHash):
@@ -53,3 +54,11 @@ class Blockchain:
 			return True
 		return False
 
+
+app = Flask(__name__)
+
+@app.route('/loadModel', methods=['POST'])
+def newModel():
+	tx_data = request.get_json()
+	
+	return "Success", 201
