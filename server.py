@@ -80,3 +80,8 @@ def announce_new_block(block):
 def index():
     return render_template('index.html') 
 
+# @app.route('download_dataset')
+# def download():
+#     data = []
+#     return data.json()
+    
