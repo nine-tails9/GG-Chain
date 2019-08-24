@@ -4,7 +4,7 @@ import json
 
 class Block:
 	def __init__(self, index, parameters, timestamp, previousHash):
-		self.index = []
+		self.index = index
 		self.parameters = parameters
 		self.timestamp = timestamp
 		self.previousHash = previousHash

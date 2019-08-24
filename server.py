@@ -20,8 +20,10 @@ def new_block():
     tx_data["timestamp"] = time.time()
 
 
-    blockchain.add_new_transaction(tx_data)
- 
+    # blockchain.add_new_transaction(tx_data)
+    prevBlock = blockchain.lastBlock
+    currentBlock = Blockchain.Block(tx_data["parameters"], )
+
     return "Success", 201
 
 @app.route('/get_chain', methods=['GET'])
