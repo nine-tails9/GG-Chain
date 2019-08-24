@@ -14,8 +14,15 @@ TableName='models',
 Item = {"id": {"S": "1" }, "name": {"S": "Deepanshu "} }
 )
 #Initalize Node Copy Of BlockChain
-#blockchain = Blockchain.Blockchain()
+blockchain = False
 #.............
+
+@app.route('/new_model', methods=['POST'])
+def new_model():
+    tx_data = request.get_json()
+    blockchain = Blockchain.Blockchain() #put params
+    # TO-DO
+
 
 @app.route('/submit_params', methods=['POST'])
 def new_block():
