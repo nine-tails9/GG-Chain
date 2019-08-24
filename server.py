@@ -2,17 +2,13 @@ from flask import Flask, escape, request, render_template, jsonify
 import requests, time, json
 import Blockchain
 import os, boto3
+import awsConfig
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 peers = []
 
-client = boto3.client('dynamodb', aws_access_key_id='ASIA2FMJGGTU6Y4SVC45', aws_secret_access_key='XrK+igsVW4t1/oWh6AjTzs3JrM+j5A/C/Xry0ZAQ',
-aws_session_token='FQoGZXIvYXdzEIL//////////wEaDH24zWl1MtRAqoYNHyKDAh7ZIZ3OYeg6IqtSLqMh31Czis49Of9ArHGggKiyBpyQMNyEe984hVAeA3ski5RwP5vyhzy50qPvxO3YRzUSwIMXOYaP+GNQYJU80X9Ep16rgP/SSoGqhkLEj+oYcafbGTuYwWz/suTPC0vgYTplW67OxCgBRSqwUKBeBKQJSIg/uAxezAaf/OI6v9lAjXxVqNPIdSAYASHDOJG64DvGUq4EkB9M8XyGyjgl03Y2EFfrHVAU8dh6yjEC3J737Lb3N7y2GJVcMp7i1mBPL8thKGh8EmwVHxeyWoU+j+g2YioqLhZv5rwlbpn4aQieO6EXrCDHOJUE+VqKEF5JwRK5sDpfCscor8SF6wU=')
-client.put_item(
-TableName='models',
-Item = {"id": {"S": "1" }, "name": {"S": "Deepanshu "} }
-)
+
 #Initalize Node Copy Of BlockChain
 #blockchain = Blockchain.Blockchain()
 #.............
