@@ -20,7 +20,7 @@
     <!-- Argon CSS -->
 </head>
 <body>
-<div class="container">
+<div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bg-default">
         <a class="navbar-brand" href="#">Ctrl Alt Del Bitch</a>
         <ul class="navbar-nav ml-lg-auto">
@@ -32,42 +32,44 @@
         </ul>
     </nav>
 
+    <div class="container">
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Author</th>
-            <th scope="col">Chain Length</th>
-            <th scope="col">Dataset Link</th>
-        </tr>
-        </thead>
-        <tbody>
-        <td>
-            Deepanshu Gandhi
-        </td>
-        <td>
-            1000
-        </td>
-        <td>
-            <a href="bac" target="_blank">BCbc</a>
-        </td>
-        </tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-    </table>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Author</th>
+                <th scope="col">Chain Length</th>
+                <th scope="col">Start Earning</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <td>
+                Deepanshu Gandhi {{ name }}
+            </td>
+            <td>
+                69
+            </td>
+            <td>
+                <button class="btn btn-primary" @click="start_download">Train</button>
+            </td>
+
+            </tbody>
+
+        </table>
+
+    </div>
 </div>
-
 <!-- Core -->
-<link href="{{ url_for('static',filename='vendor/jquery/jquery.min.js') }}" rel="stylesheet">
+<script type="text/javascript" src="{{ url_for('static',filename='vendor/jquery/jquery.min.js') }}"></script>
 
-<link href="{{ url_for('static',filename='vendor/popper/popper.min.js') }}" rel="stylesheet">
-<link href="{{ url_for('static',filename='vendor/bootstrap/bootstrap.min.js') }}" rel="stylesheet">
+<script type="text/javascript" src="{{ url_for('static',filename='vendor/popper/popper.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='vendor/bootstrap/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/argon.js') }}"></script>
 
-<link href="{{ url_for('static',filename='js/argon.js') }}" rel="stylesheet">
-
+<script type="text/javascript" src="{{ url_for('static',filename='modelTraining.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+<script src="https://unpkg.com/vue"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='app.js') }}"></script>
 </body>
 </html>
