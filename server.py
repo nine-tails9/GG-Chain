@@ -15,9 +15,11 @@ blockchain = False
 
 @app.route('/new_model', methods=['POST'])
 def new_model():
-    tx_data = request.get_json()
-    blockchain = Blockchain.Blockchain() #put params
+    file = request.get_data()
+    print(file)
+    #blockchain = Blockchain.Blockchain() #put params
     # TO-DO
+    return "Success", 201
 
 
 @app.route('/submit_params', methods=['POST'])

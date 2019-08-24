@@ -39,6 +39,7 @@
             <tr>
                 <th scope="col">Author</th>
                 <th scope="col">Chain Length</th>
+                <th scope="col">Current Accuracy</th>
                 <th scope="col">Start Earning</th>
 
             </tr>
@@ -51,46 +52,43 @@
                 69
             </td>
             <td>
+                45.325%
+            </td>
+            <td>
                 <button class="btn btn-primary" @click="start_download">Train</button>
             </td>
 
             </tbody>
 
         </table>
-        <div class="form-grup">
-            <label for="model">Upload Model</label>
-            <div class="input-group">
-                <input type="file" class="form-control" name="model" ref="model" @change="handleModel">
-                <div class="input-append">
-                    <button class="btn btn-primary">Upload</button>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="shard">Upload Shard</label>
-            <div class="input-group">
+        <form @submit.prevent="uploadModel">
 
+            <div class="form-group">
+                <label for="model">Upload Model</label>
+                <input type="file" enctype="multipart/form-data" class="form-control" name="model" ref="model"
+                       @change="handleModel">
+
+            </div>
+            <div class="form-group">
+                <label for="shard">Upload Shard</label>
                 <input type="file" class="form-control" multiple name="shards[]">
-                <div class="input-append">
-
-                    <button class="btn btn-primary">Upload</button>
-                </div>
-
             </div>
 
-        </div>
+            <input type="submit" class="btn btn-primary" @click="uploadModel" v-if="!loading.model" value="Upload">
+            <button class="btn btn-dark" @click="uploadModel" v-if="loading.model">Uploading...</button>
+        </form>
     </div>
 </div>
-    <!-- Core -->
-    <script type="text/javascript" src="{{ url_for('static',filename='vendor/jquery/jquery.min.js') }}"></script>
+<!-- Core -->
+<script type="text/javascript" src="{{ url_for('static',filename='vendor/jquery/jquery.min.js') }}"></script>
 
-    <script type="text/javascript" src="{{ url_for('static',filename='vendor/popper/popper.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static',filename='vendor/bootstrap/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static',filename='js/argon.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='vendor/popper/popper.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='vendor/bootstrap/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/argon.js') }}"></script>
 
-    <script type="text/javascript" src="{{ url_for('static',filename='modelTraining.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
-    <script src="https://unpkg.com/vue"></script>
-    <script type="text/javascript" src="{{ url_for('static',filename='app.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='modelTraining.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+<script src="https://unpkg.com/vue"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='app.js') }}"></script>
 </body>
 </html>
