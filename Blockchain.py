@@ -46,7 +46,7 @@ class Blockchain:
 
 		if not self.isValidProof(block):
 			return False
-			
+
 		self.chainLength = self.chainLength + 1
 		self.chain.append(block)
 		self.currentAccuracy = block.getAccuracy()
@@ -56,12 +56,3 @@ class Blockchain:
 		if block.getAccuracy() - self.currentAccuracy > threshold:
 			return True
 		return False
-
-
-app = Flask(__name__)
-
-@app.route('/loadModel', methods=['POST'])
-def newModel():
-	tx_data = request.get_json()
-
-	return "Success", 201
