@@ -2,7 +2,7 @@ from flask import Flask, escape, request, render_template, jsonify
 import requests, time, json
 import Blockchain
 import os, boto3
-import awsConfig
+#import awsConfig
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
@@ -100,7 +100,4 @@ def download():
     #print(data)
     # Step 1 = download dataset from AWS
 
-    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-    json_url = os.path.join(SITE_ROOT, "static/model", "model.json")
-    data = json.load(open(json_url))
     return jsonify(data)
