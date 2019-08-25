@@ -38,27 +38,26 @@ new Vue({
                 this.err = true;
                 return;
             }
+            var reader = new FileReader();
+            reader.readAsText(this.shards[0]);
+            reader.onload = this.loaded;
+
+        },
+        loaded(item){
             this.loading.model = true;
-
-            this.err =  false;
-            let formData = new FormData();
-            formData.append('model', this.model);
-
-            for(let i = 0; i < this.shards.length; i++)
-                formData.append('shards' + i, this.shards[i]);
-
             fetch('/new_model', {
                 method: 'POST',
                 headers: {
-                    "Content-Type": "multipart/form-data"
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: formData
+                body: item['currentTarget']['result']
 
             })
                 .then(res => {
                     this.loading.model = false;
                     console.log(res)
                 })
-        },
+        }
     }
 });

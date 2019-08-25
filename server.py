@@ -2,7 +2,7 @@ from flask import Flask, escape, request, render_template, jsonify
 import requests, time, json
 import Blockchain
 import os, boto3
-#import awsConfig
+import awsConfig
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
@@ -93,7 +93,8 @@ def announce_new_block(block):
         requests.post(url, data=json.dumps(block.__dict__, sort_keys=True))
 @app.route('/home')
 def index():
-    return render_template('index.html', accuracy=blockchain.currentAccuracy, chainLength=blockchain.chainLength)
+    reqs = awsConfig.getRequests()
+    return render_template('index.html', accuracy=blockchain.currentAccuracy, chainLength=blockchain.chainLength, requests=reqs)
 
 @app.route('/download_dataset', methods=['GET'])
 def download():

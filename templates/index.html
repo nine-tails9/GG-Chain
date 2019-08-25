@@ -20,15 +20,23 @@
         <a class="navbar-brand" href="#">Ctrl Alt Del Bitch</a>
         <ul class="navbar-nav ml-lg-auto">
             <li class="nav-item">
+                <a class="nav-link nav-link-icon" href="/create">
+                    Create New Request
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link nav-link-icon" href="#">
                     Requests
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link">123GG</a>
+            </li>
+
         </ul>
     </nav>
 
     <div class="container">
-
         <table class="table">
             <thead>
             <tr>
@@ -40,18 +48,23 @@
             </tr>
             </thead>
             <tbody>
-            <td>
-                Deepanshu Gandhi
-            </td>
-            <td>
-                {{ chainLength }}
-            </td>
-            <td>
-                {{ accuracy }}%
-            </td>
-            <td>
-                <button class="btn btn-primary" @click="start_download">Train</button>
-            </td>
+            {% for user in requests %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>
+                    {{ user.chainlen }}
+                </td>
+                <td>
+                    {{ user.acc }}
+                </td>
+                <td>
+                    <button class="btn btn-primary" @click="start_download">Train</button>
+                </td>
+            </tr>
+
+
+            {% endfor %}
+
 
             </tbody>
 
