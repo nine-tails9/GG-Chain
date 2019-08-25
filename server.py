@@ -14,7 +14,7 @@ CORS(app)
 
 #Initalize Node Copy Of BlockChain
 blockchain = Blockchain.Blockchain([])
-model = open('model/model.json', 'r')
+# model = open('model/model.json', 'r')
 #.............
 
 @app.route('/new_model', methods=['POST'])
