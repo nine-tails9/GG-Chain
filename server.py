@@ -4,41 +4,49 @@ import Blockchain
 import os, boto3
 import awsConfig
 from flask_cors import CORS
+import sqlite3
+
+
+
 app = Flask(__name__)
 CORS(app)
-peers = []
 
 
 #Initalize Node Copy Of BlockChain
 blockchain = Blockchain.Blockchain([])
+model = open('model/model.json', 'r')
 #.............
 
 @app.route('/new_model', methods=['POST'])
 def new_model():
-    file = request.get_data()
-    print(file)
-    #blockchain = Blockchain.Blockchain() #put params
-    # TO-DO
+    files = request.get_data()
+    # files = json.loads(files)
+    print(files)
+
+    shards = []
+    shards.append(open('static/model/group1-shard1of1.bin', 'r').read())
+    blockchain = Blockchain.Blockchain(shard)
+
     return "Success", 201
 
 
 @app.route('/submit_params', methods=['POST'])
 def new_block():
     tx_data = request.get_json()
-    required_fields = ["author", "parameters"]
+    required_fields = ["author", "parameters", "accuracy"]
 
     for field in required_fields:
         if not tx_data.get(field):
-            return "Invlaid Parameters data", 404
+            return "Invalid Parameters data", 404
     tx_data["timestamp"] = time.time()
-
-
 
     # blockchain.add_new_transaction(tx_data)
     prevBlock = blockchain.lastBlock
-    # currentBlock = Blockchain.Block(tx_data["parameters"], )
-
-    return "Success", 201
+    currentBlock = Blockchain.Block(prevBlock.index + 1, tx_data["parameters"], tx_data["timestamp"], prevBlock.hash)
+    if addBlock(currentBlock):
+        return "Success", 201
+    else:
+        return "Invalid block", 400
 
 @app.route('/get_chain', methods=['GET'])
 def get_chain():
@@ -48,56 +56,46 @@ def get_chain():
     return json.dumps({"length": len(chain_data),
                        "chain": chain_data})
 
-@app.route('/add_nodes', methods=['POST'])
-def register_new_peers():
-    nodes = request.get_json()
-    if not nodes:
-        return "Invalid data", 400
-    for node in nodes:
-        peers.add(node)
-    return "Success", 201
-
-# def consensus():
-#     global blockchain
-
-#     longest_chain = None
-#     current_len = len(blockchain)
-
-#     for node in peers:
-#         response = requests.get('http://{}/chain'.format(node))
-#         length = response.json()['length']
-#         chain = response.json()['chain']
-#         if length > current_len and blockchain.check_chain_validity(chain):
-#             current_len = length
-#             longest_chain = chain
-
-#     if longest_chain:
-#         blockchain = longest_chain
-#         return True
-
-#     return False
-def validate_and_add_block(block_data):
-
-    prev_block = getPrevBlock()
-    if acc > prev_block['accuray']:
-        proof = block_data['hash']
-        added = blockchain.add_block(block, proof)
-    else:
-        return "The block was discarded by the node", 400
-    announce_new_block(added)
-    return "Block added to the chain", 201
-
-def announce_new_block(block):
-    for peer in peers:
-        url = "http://{}/add_block".format(peer)
-        requests.post(url, data=json.dumps(block.__dict__, sort_keys=True))
 @app.route('/home')
 def index():
     reqs = awsConfig.getRequests()
     return render_template('index.html', accuracy=blockchain.currentAccuracy, chainLength=blockchain.chainLength, requests=reqs)
 
+@app.route('/last_block', methods=['GET'])
+def getlastblock():
+    return blockchain.lastBlock.parameters
+
 @app.route('/download_dataset', methods=['GET'])
 def download():
+    conn = sqlite3.connect('dataset.db')
+    c = conn.cursor()
+    train = []
+    for row in c.execute('SELECT * FROM train ORDER BY RANDOM() LIMIT 500'):
+        # print(row[0])
+        train.append(row[0])
+    # print(train)
+    xtrain = []
+    ytrain = []
+    for t in train:
+        t = json.loads(t)
+        xtrain.append(t['x'])
+        ytrain.append(t['y'])
+
+    test = []
+    for row in c.execute('SELECT * FROM test'):
+        test.append(row[0])
+
+    xtest = []
+    ytest = []
+    for t in test:
+        t = json.loads(t)
+        xtest.append(t['x'])
+        ytest.append(t['y'])
+    conn.close()
+
+    result = {'train': { 'x': str(xtrain), 'y': str(ytrain)}, 'test': { 'x': str(xtest), 'y': str(ytest) } }
+    # print(result)
+    return json.dumps(result)
     #print(data)
     # Step 1 = download dataset from AWS
 
