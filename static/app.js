@@ -29,13 +29,13 @@ new Vue({
             let model = await tf.loadLayersModel("http://127.0.0.1:5000/static/model/model.json");
             await model.save('indexeddb://my-model');
 
-            let updatedShards = await fetch('/last_block')
-                .then(function(response) {
-                    return response.json();
-                })
-                .then(function(myjson) {
-                    return myjson;
-                });
+//             let updatedShards = await fetch('/last_block')
+//                 .then(function(response) {
+//                     return response.json();
+//                 })
+//                 .then(function(myjson) {
+//                     return myjson;
+//                 });
 
             // console.log(model.summary());
             model.compile({
