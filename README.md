@@ -12,7 +12,7 @@ the on-campus event conducted by Codefest, the annual departmental fest of Compu
 ### Ctrl Alt Del Bitch - FX005
 
 * Deepanshu Gandhi
-* Arvind Punk
+* P.J. Arvind
 
 #### Overview
 
